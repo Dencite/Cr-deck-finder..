@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clash Royale Deck Finder</title>
+</head>
+<body>
+    <h2>Enter Opponent's Medals</h2>
+    <input type="number" id="medals" placeholder="Enter medal count"/>
+    <button onclick="searchDeck()">Search Deck</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function searchDeck() {
+            const medals = document.getElementById('medals').value;
+            const res = await fetch('/get_deck', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ medals })
+            });
+            const data = await res.json();
+            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+</html>
